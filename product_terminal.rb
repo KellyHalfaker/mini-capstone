@@ -6,9 +6,26 @@ puts "(a) First"
 puts "(b) Second"
 puts "(c) Third"
 puts "(d) All"
-product1_name = Unirest.get("http://localhost:3000/first_product_url").body["name"]
-product1_price = Unirest.get("http://localhost:3000/first_product_url").body["price"]
-product1_image_url = Unirest.get("http://localhost:3000/first_product_url").body["image_url"]
-product1_description = Unirest.get("http://localhost:3000/first_product_url").body["description"]
-table = TTY::Table.new ['Product','Price', 'Image_url', 'Description' ], [[product1_name, product1_price, product1_image_url, product1_description], ['b1', 'b2']]
+
+number = ""
+input = gets.chomp
+if input == "a"
+  number = "first"
+elsif input == "b"
+  number = "second"
+elsif input == "c"
+  number = "third"
+end
+
+
+
+product_name = Unirest.get("http://localhost:3000/#{number}_product_url").body["name"]
+product_price = Unirest.get("http://localhost:3000/#{number}_product_url").body["price"]
+product_image_url = Unirest.get("http://localhost:3000/#{number}_product_url").body["image_url"]
+product_description = Unirest.get("http://localhost:3000/#{number}_product_url").body["description"]
+
+table = TTY::Table.new ['Product','Price', 'Image_url', 'Description' ], [[product_name, product_price, product_image_url, product_description]]
+
 puts table.render(:basic)
+
+
