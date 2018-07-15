@@ -9,6 +9,10 @@ class Product < ApplicationRecord
 
   belongs_to :supplier
   has_many :images
+  has_many :category_products
+  has_many :categories, through: :category_products
+  has_many :carted_products
+  has_many :orders, through: :carted_products
   
   def is_discounted
     price < 1000
@@ -31,8 +35,12 @@ class Product < ApplicationRecord
   # end
 
   def image_urls
-    images_info = Image.where(product_id:id)
+    images_info = Image.where(product_id: id)
     urls = images_info.map{|image| image[:url]}
     return urls
+  end
+
+  def category_names
+    categories.map{ |category| category.name}
   end
 end
